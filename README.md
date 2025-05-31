@@ -1,0 +1,24 @@
+## TODO
+
+- [ ] measure
+  - [x] pull request
+  - [x] review
+- [ ] BI (Evidence)
+  - [ ] Count
+    - [ ] PR count (merged)
+    - [ ] release count
+  - [ ] lead time
+    - [ ] lead time for open to first comment
+    - [ ] lead time for first comment to approve
+    - [ ] lead time for approve to merge
+    - [ ] lead time for open to merge
+  - [ ] Personal
+    - [ ] Comment percent (to all pr)
+    - [ ] Approve percent (to all pr)
+    - [ ] Comment / Approve percent
+    - [ ] PR Count
+    - [ ] lead time for open to first comment
+    - [ ] lead time for first comment to approve
+    - [ ] lead time for approve to merge
+    - [ ] lead time for open to merge
+- [ ] in one script
