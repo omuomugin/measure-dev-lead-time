@@ -24,13 +24,15 @@ gh api graphql --paginate -F owner="${REPO_OWNER}" -F name="${REPO_NAME}" -F que
   }
 ' \
 --jq '
-  .data.search.nodes[] |
-  .number as $number |
-  .reviews.nodes |
-  group_by(.author.login) |
-  select(length > 0) |
-  map({number: $number, author: .[0].author.login, isApprove: map(.state) | unique | any(.== "APPROVED")}) |
-  map([.number, .author, .isApprove]) |
-  .[] |
-  @csv
-' | sed "s/\"/'/g" > bin/review.csv
+  ["number", "author", "isApprove"],
+  (
+    .data.search.nodes[] |
+    .number as $number |
+    .reviews.nodes |
+    group_by(.author.login) |
+    select(length > 0) |
+    map({number: $number, author: .[0].author.login, isApprove: map(.state) | unique | any(.== "APPROVED")}) |
+    map([.number, .author, .isApprove]) |
+    .[]
+  ) | @csv
+' | sed "s/\"/'/g" > ../bi/sources/review/review.csv

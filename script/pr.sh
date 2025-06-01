@@ -17,7 +17,7 @@ gh api graphql --paginate -F owner="${REPO_OWNER}" -F name="${REPO_NAME}" -F que
               submittedAt
             }
           },
-          fisrt_approved_review: reviews(states: APPROVED, first: 1) {
+          first_approved_review: reviews(states: APPROVED, first: 1) {
             nodes {
               submittedAt
             }
@@ -34,13 +34,15 @@ gh api graphql --paginate -F owner="${REPO_OWNER}" -F name="${REPO_NAME}" -F que
   }
 ' \
 --jq '
-  .data.search.nodes |
-  map({number:.number, title:.title, author:.author.login, createdAt:.createdAt, mergedAt:.mergedAt, firstReviewdAt:.first_submitted_review.nodes[0].submittedAt, firstApprovedAt:.fisrt_approved_review.nodes[0].submittedAt}) |
-  .[] |
-  if .firstReviewdAt == null then .firstReviewdAt = .mergedAt end |
-  if .firstApprovedAt == null then .firstApprovedAt = .mergedAt end |
-  [.number, .title, .author, .createdAt, .mergedAt, .firstReviewdAt, .firstApprovedAt] |
-  @csv
+  ["number","title","author","createdAt", "mergedAt","firstReviewedAt", "firstApprovedAt"],
+  (
+    .data.search.nodes |
+    map({number:.number, title:.title, author:.author.login, createdAt:.createdAt, mergedAt:.mergedAt, firstReviewedAt:.first_submitted_review.nodes[0].submittedAt, firstApprovedAt:.first_approved_review.nodes[0].submittedAt}) |
+    .[] |
+    if .firstReviewedAt == null then .firstReviewedAt = .mergedAt end |
+    if .firstApprovedAt == null then .firstApprovedAt = .mergedAt end |
+    [.number, .title, .author, .createdAt, .mergedAt, .firstReviewedAt, .firstApprovedAt]
+  ) | @csv
 ' |
 sed "s/\'//g" |
-sed "s/\"/'/g" > bin/pr.csv
+sed "s/\"/'/g" > ../bi/sources/pr/review.csv
