@@ -22,8 +22,20 @@ gh api graphql --paginate -F owner="${REPO_OWNER}" -F name="${REPO_NAME}" -F que
       }
     }
   }
-' \
---jq '
+' |
+sed "s/\'//g" |
+jq -s '
+  [.[].data.search.nodes] | add as $all_nodes |
+  {
+    data: {
+      search: {
+        nodes: $all_nodes
+      }
+    }
+  }
+' > bin/review.json
+
+cat bin/review.json | jq -r '
   ["number", "author", "isApprove"],
   (
     .data.search.nodes[] |
@@ -35,4 +47,4 @@ gh api graphql --paginate -F owner="${REPO_OWNER}" -F name="${REPO_NAME}" -F que
     map([.number, .author, .isApprove]) |
     .[]
   ) | @csv
-' | sed "s/\"/'/g" > ../bi/sources/review/review.csv
+' > ../bi/sources/github/review.csv

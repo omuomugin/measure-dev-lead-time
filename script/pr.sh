@@ -32,8 +32,20 @@ gh api graphql --paginate -F owner="${REPO_OWNER}" -F name="${REPO_NAME}" -F que
       }
     }
   }
-' \
---jq '
+' |
+sed "s/\'//g" |
+jq -s '
+  [.[].data.search.nodes] | add as $all_nodes |
+  {
+    data: {
+      search: {
+        nodes: $all_nodes
+      }
+    }
+  }
+' > bin/pr.json
+
+cat bin/pr.json | jq -r '
   ["number","title","author","createdAt", "mergedAt","firstReviewedAt", "firstApprovedAt"],
   (
     .data.search.nodes |
@@ -43,6 +55,4 @@ gh api graphql --paginate -F owner="${REPO_OWNER}" -F name="${REPO_NAME}" -F que
     if .firstApprovedAt == null then .firstApprovedAt = .mergedAt end |
     [.number, .title, .author, .createdAt, .mergedAt, .firstReviewedAt, .firstApprovedAt]
   ) | @csv
-' |
-sed "s/\'//g" |
-sed "s/\"/'/g" > ../bi/sources/pr/review.csv
+' > ../bi/sources/github/pr.csv

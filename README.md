@@ -4,9 +4,9 @@
   - [x] pull request
   - [x] review
 - [ ] BI (Evidence)
+  - [x] Install
   - [ ] Count
-    - [ ] PR count (merged)
-    - [ ] release count
+    - [x] PR count (merged)
   - [ ] lead time
     - [ ] lead time for open to first comment
     - [ ] lead time for first comment to approve

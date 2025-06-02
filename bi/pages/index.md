@@ -1,56 +1,27 @@
 ---
-title: Welcome to Evidence
+title: 開発リードタイム
 ---
 
-<Details title='How to edit this page'>
+## Pull Request 数 (過去12週間)
 
-  This page can be found in your project at `/pages/index.md`. Make a change to the markdown file and save it to see the change take effect in your browser.
-</Details>
-
-```sql categories
-  select
-      category
-  from needful_things.orders
-  group by category
+```pull_request_count_by_week_limit_to_12_weeks
+select
+  date_trunc('week', mergedAt) as week,
+  count(*) as pr_count
+from github.pr
+where mergedAt >= date_trunc('week', current_date) - interval '12 weeks'
+    and date_trunc('week', mergedAt) <> date_trunc('week', current_date)
+group by week
+order by week desc
 ```
 
-<Dropdown data={categories} name=category value=category>
-    <DropdownOption value="%" valueLabel="All Categories"/>
-</Dropdown>
+今週: <Value data={pull_request_count_by_week_limit_to_12_weeks} row=0 column="pr_count" /> ( {pull_request_count_by_week_limit_to_12_weeks[0].pr_count - pull_request_count_by_week_limit_to_12_weeks[1].pr_count} )  
+先週: <Value data={pull_request_count_by_week_limit_to_12_weeks} row=1 column="pr_count" />
 
-<Dropdown name=year>
-    <DropdownOption value=% valueLabel="All Years"/>
-    <DropdownOption value=2019/>
-    <DropdownOption value=2020/>
-    <DropdownOption value=2021/>
-</Dropdown>
-
-```sql orders_by_category
-  select 
-      date_trunc('month', order_datetime) as month,
-      sum(sales) as sales_usd,
-      category
-  from needful_things.orders
-  where category like '${inputs.category.value}'
-  and date_part('year', order_datetime) like '${inputs.year.value}'
-  group by all
-  order by sales_usd desc
-```
-
-<BarChart
-    data={orders_by_category}
-    title="Sales by Month, {inputs.category.label}"
-    x=month
-    y=sales_usd
-    series=category
+<LineChart
+    data={pull_request_count_by_week_limit_to_12_weeks}
+    x=week
+    y=pr_count
+    xAxisTitle="week"
+    yAxisTitle="count"
 />
-
-## What's Next?
-- [Connect your data sources](settings)
-- Edit/add markdown files in the `pages` folder
-- Deploy your project with [Evidence Cloud](https://evidence.dev/cloud)
-
-## Get Support
-- Message us on [Slack](https://slack.evidence.dev/)
-- Read the [Docs](https://docs.evidence.dev/)
-- Open an issue on [Github](https://github.com/evidence-dev/evidence)
