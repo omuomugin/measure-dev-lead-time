@@ -4,14 +4,14 @@
   - [x] pull request
   - [x] review
 - [ ] BI (Evidence)
+  - [x] Install
   - [ ] Count
-    - [ ] PR count (merged)
-    - [ ] release count
-  - [ ] lead time
-    - [ ] lead time for open to first comment
-    - [ ] lead time for first comment to approve
-    - [ ] lead time for approve to merge
-    - [ ] lead time for open to merge
+    - [x] PR count (merged)
+  - [x] lead time
+    - [x] lead time for open to first comment
+    - [x] lead time for first comment to approve
+    - [x] lead time for approve to merge
+    - [x] lead time for open to merge
   - [ ] Personal
     - [ ] Comment percent (to all pr)
     - [ ] Approve percent (to all pr)
