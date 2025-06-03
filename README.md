@@ -7,11 +7,11 @@
   - [x] Install
   - [ ] Count
     - [x] PR count (merged)
-  - [ ] lead time
-    - [ ] lead time for open to first comment
-    - [ ] lead time for first comment to approve
-    - [ ] lead time for approve to merge
-    - [ ] lead time for open to merge
+  - [x] lead time
+    - [x] lead time for open to first comment
+    - [x] lead time for first comment to approve
+    - [x] lead time for approve to merge
+    - [x] lead time for open to merge
   - [ ] Personal
     - [ ] Comment percent (to all pr)
     - [ ] Approve percent (to all pr)
