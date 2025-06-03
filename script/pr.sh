@@ -1,8 +1,6 @@
 #!/bin/sh
 
-source .env
-
-gh api graphql --paginate -F owner="${REPO_OWNER}" -F name="${REPO_NAME}" -F queryStr="repo:${REPO_OWNER}/${REPO_NAME} is:pr is:merged merged:${MERGED_QUERY} sort:created-asc" -f query='
+gh api graphql --paginate -F queryStr="repo:${REPO_NAME} is:pr is:merged merged:${MERGED_QUERY} sort:created-asc" -f query='
   query($queryStr: String!, $endCursor: String) {
     search(query: $queryStr, type: ISSUE, first: 100, after: $endCursor) {
       nodes {
@@ -45,14 +43,21 @@ jq -s '
   }
 ' > bin/pr.json
 
-cat bin/pr.json | jq -r '
-  ["number","title","author","createdAt", "mergedAt","firstReviewedAt", "firstApprovedAt"],
-  (
-    .data.search.nodes |
-    map({number:.number, title:.title, author:.author.login, createdAt:.createdAt, mergedAt:.mergedAt, firstReviewedAt:.first_submitted_review.nodes[0].submittedAt, firstApprovedAt:.first_approved_review.nodes[0].submittedAt}) |
-    .[] |
-    if .firstReviewedAt == null then .firstReviewedAt = .mergedAt end |
-    if .firstApprovedAt == null then .firstApprovedAt = .mergedAt end |
-    [.number, .title, .author, .createdAt, .mergedAt, .firstReviewedAt, .firstApprovedAt]
-  ) | @csv
-' > ../bi/sources/github/pr.csv
+cat bin/pr.json | jq -r --arg repository "${REPO_NAME}" '
+  .data.search.nodes |
+  map({
+    repository: $repository,
+    number:.number,
+    title:.title,
+    author:.author.login,
+    createdAt:.createdAt,
+    mergedAt:.mergedAt,
+    firstReviewedAt: (.first_submitted_review.nodes[0].submittedAt // .mergedAt),
+    firstApprovedAt: (.first_approved_review.nodes[0].submittedAt // .mergedAt)
+  }) |
+  .[] |
+  [.repository, .number, .title, .author, .createdAt, .mergedAt, .firstReviewedAt, .firstApprovedAt] |
+  @csv
+'
+
+rm -f bin/pr.json
