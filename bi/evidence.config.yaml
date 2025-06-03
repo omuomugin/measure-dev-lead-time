@@ -2,6 +2,9 @@ appearance:
   default: system
   switcher: true
 
+deployment:
+  basePath: /measure-dev-lead-time
+
 theme:
   colorPalettes:
     default:

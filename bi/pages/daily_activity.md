@@ -5,6 +5,7 @@ queries:
   - repo: github_pr_repo.sql
 ---
 
+
 <Dropdown name=selected_item data={authors} value=author>
     <DropdownOption value="%" valueLabel="全ての author"/>
 </Dropdown>
