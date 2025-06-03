@@ -2,10 +2,15 @@
 title: アクティビティ (日次)
 queries:
   - authors: github_pr_authors.sql
+  - repo: github_pr_repo.sql
 ---
 
 <Dropdown name=selected_item data={authors} value=author>
     <DropdownOption value="%" valueLabel="全ての author"/>
+</Dropdown>
+
+<Dropdown name=selected_repo data={repo} value=repository>
+    <DropdownOption value="%" valueLabel="全ての repo"/>
 </Dropdown>
 
 過去2週間のアクティビティを確認できます。
@@ -19,7 +24,8 @@ select
 from github.pr
 where mergedAt >= date_trunc('day', current_date) - interval '14 days'
     and date_trunc('day', mergedAt) <> date_trunc('day', current_date)
-    and author like '${inputs.selected_item.value}'
+    and author like '${inputs.selected_author.value}'
+    and repository like '${inputs.selected_repo.value}'
 group by day
 order by day desc
 ```
@@ -47,6 +53,7 @@ select
 from github.pr
 where mergedAt >= date_trunc('day', current_date) - interval '14 days'
   and date_trunc('day', mergedAt) <> date_trunc('day', current_date)
+  and repository like '${inputs.selected_repo.value}'
 group by day
 order by day desc
 ```
@@ -70,7 +77,8 @@ select
 from github.pr
 where mergedAt >= date_trunc('day', current_date) - interval '14 days'
   and date_trunc('day', mergedAt) <> date_trunc('day', current_date)
-  and author like '${inputs.selected_item.value}'
+  and author like '${inputs.selected_author.value}'
+  and repository like '${inputs.selected_repo.value}'
 group by day
 order by day desc
 ```
@@ -95,7 +103,8 @@ select
 from github.pr
 where mergedAt >= date_trunc('day', current_date) - interval '14 days'
   and date_trunc('day', mergedAt) <> date_trunc('day', current_date)
-  and author like '${inputs.selected_item.value}'
+  and author like '${inputs.selected_author.value}'
+  and repository like '${inputs.selected_repo.value}'
 group by day
 order by day desc
 ```
@@ -120,7 +129,8 @@ select
 from github.pr
 where mergedAt >= date_trunc('day', current_date) - interval '14 days'
   and date_trunc('day', mergedAt) <> date_trunc('day', current_date)
-  and author like '${inputs.selected_item.value}'
+  and author like '${inputs.selected_author.value}'
+  and repository like '${inputs.selected_repo.value}'
 group by day
 order by day desc
 ```

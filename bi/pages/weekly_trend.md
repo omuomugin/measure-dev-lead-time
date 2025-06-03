@@ -2,10 +2,15 @@
 title: トレンド (週次)
 queries:
   - authors: github_pr_authors.sql
+  - repo: github_pr_repo.sql
 ---
 
 <Dropdown name=selected_item data={authors} value=author>
     <DropdownOption value="%" valueLabel="全ての author"/>
+</Dropdown>
+
+<Dropdown name=selected_repo data={repo} value=repository>
+    <DropdownOption value="%" valueLabel="全ての repo"/>
 </Dropdown>
 
 過去12週間のチームのトレンドを確認できます。
@@ -20,6 +25,7 @@ from github.pr
 where mergedAt >= date_trunc('week', current_date) - interval '12 weeks'
     and date_trunc('week', mergedAt) <> date_trunc('week', current_date)
     and author like '${inputs.selected_item.value}'
+    and repository like '${inputs.selected_repo.value}'
 group by week
 order by week desc
 ```
@@ -47,6 +53,7 @@ select
 from github.pr
 where mergedAt >= date_trunc('week', current_date) - interval '12 weeks'
   and date_trunc('week', mergedAt) <> date_trunc('week', current_date)
+  and repository like '${inputs.selected_repo.value}'
 group by week
 order by week desc
 ```
@@ -71,6 +78,7 @@ from github.pr
 where mergedAt >= date_trunc('week', current_date) - interval '12 weeks'
   and date_trunc('week', mergedAt) <> date_trunc('week', current_date)
   and author like '${inputs.selected_item.value}'
+  and repository like '${inputs.selected_repo.value}'
 group by week
 order by week desc
 ```
@@ -96,6 +104,7 @@ from github.pr
 where mergedAt >= date_trunc('week', current_date) - interval '12 weeks'
   and date_trunc('week', mergedAt) <> date_trunc('week', current_date)
   and author like '${inputs.selected_item.value}'
+  and repository like '${inputs.selected_repo.value}'
 group by week
 order by week desc
 ```
@@ -121,6 +130,7 @@ from github.pr
 where mergedAt >= date_trunc('week', current_date) - interval '12 weeks'
   and date_trunc('week', mergedAt) <> date_trunc('week', current_date)
   and author like '${inputs.selected_item.value}'
+  and repository like '${inputs.selected_repo.value}'
 group by week
 order by week desc
 ```
