@@ -1,8 +1,8 @@
 ---
 title: トレンド (週次)
 queries:
-  - authors: github_pr_authors.sql
-  - repo: github_pr_repo.sql
+  - authors: github_authors.sql
+  - repo: github_repo.sql
 ---
 
 <Dropdown name=selected_item data={authors} value=author>

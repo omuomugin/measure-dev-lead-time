@@ -48,6 +48,6 @@ cat bin/review.json | jq -r --arg repository "${REPO_NAME}" '
   map([.repository, .number, .author, .isApprove]) |
   .[] |
    @csv
-' > ../bi/sources/github/review.csv
+'
 
 rm -f bin/review.json

@@ -1,8 +1,8 @@
 ---
 title: アクティビティ (日次)
 queries:
-  - authors: github_pr_authors.sql
-  - repo: github_pr_repo.sql
+  - authors: github_authors.sql
+  - repo: github_repo.sql
 ---
 
 <Dropdown name=selected_author data={authors} value=author>
