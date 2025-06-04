@@ -5,6 +5,10 @@ queries:
   - repo: github_repo.sql
 ---
 
+```sql repos
+select * from test_coverage.coverage
+```
+
 <Alert status="info">
 TBD: このページがどのように使われるかの説明
 </Alert>
