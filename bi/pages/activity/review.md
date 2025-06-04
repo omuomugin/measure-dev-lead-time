@@ -1,9 +1,13 @@
 ---
-title: PR レビューアクティビティ
+title: PR レビューサマリー
 queries:
   - authors: github_authors.sql
   - repo: github_repo.sql
 ---
+
+<Alert status="info">
+TBD: このページがどのように使われるかの説明
+</Alert>
 
 <Dropdown name=selected_author data={authors} value=author>
     <DropdownOption value="%" valueLabel="全ての author"/>
@@ -19,7 +23,7 @@ queries:
     <DropdownOption valueLabel="30 days" value="30 days" />
 </Dropdown>
 
-Total Pull Request Count
+## レビューサマリー
 
 ```sql pull_request_count_by_day
 select
@@ -32,6 +36,8 @@ where mergedAt >= date_trunc('day', current_date) - interval '${inputs.target_da
 group by day
 order by day desc
 ```
+
+Total Pull Request Count
 
 <LineChart
     data={pull_request_count_by_day}
@@ -125,6 +131,6 @@ order by reviewd_pr_count desc
 limit 3
 ```
 
-Top 3 Reviewers
+## Top 3 Reviewers
 
 <DataTable data={review_chanmpion_by_day}/>

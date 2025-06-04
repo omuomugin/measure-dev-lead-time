@@ -1,9 +1,13 @@
 ---
-title: アクティビティ (日次)
+title: PR リードタイム
 queries:
   - authors: github_authors.sql
   - repo: github_repo.sql
 ---
+
+<Alert status="info">
+TBD: このページがどのように使われるかの説明
+</Alert>
 
 <Dropdown name=selected_author data={authors} value=author>
     <DropdownOption value="%" valueLabel="全ての author"/>

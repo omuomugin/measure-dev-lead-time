@@ -7,7 +7,6 @@
 
 <EvidenceDefaultLayout {data}
     title="measure-dev-lead-time"
-    neverShowQueries=true
-    hideTOC=true>
+    neverShowQueries=true>
 	<slot slot="content" />
 </EvidenceDefaultLayout>
