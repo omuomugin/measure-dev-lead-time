@@ -1,24 +1,5 @@
-## TODO
+## measure-dev-lead-time
 
-- [ ] measure
-  - [x] pull request
-  - [x] review
-- [ ] BI (Evidence)
-  - [x] Install
-  - [ ] Count
-    - [x] PR count (merged)
-  - [x] lead time
-    - [x] lead time for open to first comment
-    - [x] lead time for first comment to approve
-    - [x] lead time for approve to merge
-    - [x] lead time for open to merge
-  - [ ] Personal
-    - [ ] Comment percent (to all pr)
-    - [ ] Approve percent (to all pr)
-    - [ ] Comment / Approve percent
-    - [ ] PR Count
-    - [ ] lead time for open to first comment
-    - [ ] lead time for first comment to approve
-    - [ ] lead time for approve to merge
-    - [ ] lead time for open to merge
-- [ ] in one script
+TBD
+
+https://omuomugin.github.io/measure-dev-lead-time/
